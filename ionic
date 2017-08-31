@@ -1,0 +1,52 @@
+angular.module('routes', [])//routes路由模型
+
+.config(function($stateProvider, $urlRouterProvider) {
+  $stateProvider
+
+    .state('app', {
+    url: '/app',
+    abstract: true,
+    templateUrl: 'templates/menu.html',
+    controller: 'AppCtrl'
+  })
+
+  .state('app.search', {
+    url: '/search/:id?cc',//自定义页面参数1
+    views: {
+      'menuContent': {//这里填入tab子页面的容器的名字，对应于index.html中<ion-nav-view>的name属性
+        templateUrl: 'templates/search.html'//这里表示：在"menuContent"这个tab中装载"templates/search.html"这个模板
+      }
+    }
+  })
+
+  .state('app.browse', {
+      url: '/browse',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/browse.html'
+        }
+      }
+    })
+    .state('app.playlists', {
+      url: '/playlists',
+      views: {
+        'menuContent': {
+          templateUrl: 'templates/playlists.html',
+          controller: 'PlaylistsCtrl',
+        }
+	
+      }
+    })
+
+  .state('app.single', {
+    url: '/playlists_1/:playlistId',
+    views: {
+      'menuContent': {
+        templateUrl: 'templates/playlist.html',
+        controller: 'PlaylistCtrl',
+      }
+    }
+  });
+  // if none of the above states are matched, use this as the fallback
+  $urlRouterProvider.otherwise('/app/playlists');
+});
